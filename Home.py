@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import pickle
 import numpy as np
 import joblib
 
@@ -15,7 +14,6 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     try:
-        # محاولة التحميل باستخدام joblib مباشرة
         model = joblib.load('final_model.pkl')
         return model
     except Exception as e:
@@ -53,14 +51,14 @@ def prepare_input():
     cholesterol_map = {"Normal": 1, "Above Normal": 2, "Well Above Normal": 3}
     gluc_map = {"Normal": 1, "Above Normal": 2, "Well Above Normal": 3}
     
-    # حساب BMI
+    # Calculate BMI
     height_m = height / 100
     bmi = weight / (height_m * height_m)
     
-    # حساب pulse pressure
+    # Calculate pulse pressure
     pulse_pressure = ap_hi - ap_lo
     
-    # حساب mean arterial pressure
+    # Calculate mean arterial pressure
     map_value = (ap_hi + 2 * ap_lo) / 3
     
     input_data = {
@@ -82,7 +80,7 @@ def prepare_input():
         'weight_kg': weight
     }
     
-    # ترتيب الميزات بنفس ترتيب النموذج
+    # Order features to match model
     feature_order = [
         'age', 'gender', 'height', 'weight', 'ap_hi', 'ap_lo',
         'cholesterol', 'gluc', 'smoke', 'alco', 'active',
@@ -115,4 +113,4 @@ if st.button("Predict"):
 
 # Add footer
 st.write("---")
-st.write("Developed for Cardiovascular Disease Prediction")
+st.write("Developed for Cardiovascular Disease Prediction") 
