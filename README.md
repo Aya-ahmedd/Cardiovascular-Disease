@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Cardiovascular Disease Prediction System
 
 This is a web application that predicts the likelihood of cardiovascular disease based on various health parameters using machine learning.
@@ -56,3 +57,6 @@ This application can be deployed on various platforms:
 ## License
 
 This project is licensed under the MIT License. 
+=======
+# Cardiovascular-Disease
+>>>>>>> 19822fe1cace4182ae079b073a64ed79134eb4bf
