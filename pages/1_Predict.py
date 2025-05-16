@@ -5,10 +5,16 @@ import joblib
 
 # Set page config
 st.set_page_config(
-    page_title="Cardiovascular Disease Analysis",
-    page_icon="❤️",
+    page_title="Cardiovascular Disease Prediction",
+    page_icon="🎯",
     layout="wide"
 )
+
+# Title and description
+st.title("Cardiovascular Disease Prediction")
+st.write("""
+Enter the patient's information below to predict the likelihood of cardiovascular disease.
+""")
 
 # Load the model
 @st.cache_resource
@@ -19,47 +25,6 @@ def load_model():
     except Exception as e:
         st.error(f"Error loading model: {str(e)}")
         return None
-
-# Title and description
-st.title("Cardiovascular Disease Analysis System")
-st.write("""
-Welcome to the Cardiovascular Disease Analysis System! This application helps you:
-- Predict the likelihood of cardiovascular disease
-- Visualize and analyze cardiovascular disease data
-- Understand risk factors and their impact
-
-### 🎯 Features
-1. **Disease Prediction**
-   - Input patient data
-   - Get instant risk assessment
-   - View detailed probability analysis
-
-2. **Data Visualization**
-   - Interactive charts and graphs
-   - Statistical analysis
-   - Risk factor correlations
-
-### 📊 How to Use
-1. Use the sidebar to navigate between pages
-2. Select "Predict" to make predictions
-3. Select "Visualization" to explore data insights
-
-### ℹ️ About
-This system uses machine learning to predict cardiovascular disease risk based on various health parameters.
-The model has been trained on extensive medical data to provide accurate predictions.
-""")
-
-# Add some statistics or key information
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.metric(label="Model Accuracy", value="95%")
-    
-with col2:
-    st.metric(label="Data Points", value="70,000+")
-    
-with col3:
-    st.metric(label="Risk Factors", value="12+")
 
 # Create input fields
 col1, col2 = st.columns(2)
@@ -141,10 +106,29 @@ if st.button("Predict"):
                 st.success("✅ Low Risk of Cardiovascular Disease")
                 
             st.write(f"Probability of Cardiovascular Disease: {probability[0][1]:.2%}")
+            
+            # Add risk factors analysis
+            st.write("### Risk Factors Analysis")
+            risk_factors = []
+            if age > 50: risk_factors.append("Age > 50")
+            if ap_hi > 140: risk_factors.append("High Systolic Blood Pressure")
+            if ap_lo > 90: risk_factors.append("High Diastolic Blood Pressure")
+            if bmi > 30: risk_factors.append("High BMI")
+            if smoke: risk_factors.append("Smoking")
+            if cholesterol != "Normal": risk_factors.append("Elevated Cholesterol")
+            if gluc != "Normal": risk_factors.append("Elevated Glucose")
+            if not active: risk_factors.append("Physical Inactivity")
+            
+            if risk_factors:
+                st.write("Identified Risk Factors:")
+                for factor in risk_factors:
+                    st.write(f"- {factor}")
+            else:
+                st.write("No significant risk factors identified.")
         
     except Exception as e:
         st.error(f"An error occurred during prediction: {str(e)}")
 
 # Add footer
 st.write("---")
-st.write("Developed for Cardiovascular Disease Analysis") 
+st.write("Developed for Cardiovascular Disease Prediction") 
